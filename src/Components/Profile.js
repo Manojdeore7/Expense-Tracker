@@ -3,9 +3,10 @@ import AuthContext from "../Store/AuthContext";
 
 function Profile() {
   let context = useContext(AuthContext);
-  let token = context.idToken;
+  let token = context.Token;
   let nameRef = useRef("");
   let urlRef = useRef("");
+
   async function submitHandler(e) {
     e.preventDefault();
     let name = nameRef.current.value;
@@ -18,15 +19,20 @@ function Profile() {
           idToken: token,
           displayName: name,
           photoUrl: url,
+          returnSecureToken: true,
         }),
-        returnSecureToken: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
+
     if (res.ok) {
       let data = await res.json();
       alert(data.displayName);
     } else {
-      alert("some problem is there");
+      let data = await res.json();
+      alert(data.error.message);
     }
   }
   return (
