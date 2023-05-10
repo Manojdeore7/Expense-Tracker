@@ -6,7 +6,8 @@ import Welcome from "./Components/Welcome";
 import { useContext } from "react";
 import AuthContext from "./Store/AuthContext";
 import Header from "./Components/Header";
-
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import Profile from "./Components/Profile";
 function App() {
   let context = useContext(AuthContext);
   let login = context.isLoggedIn;
@@ -20,8 +21,18 @@ function App() {
           </Route>
         )}
         {login && (
-          <Route path="/Welcome">
+          <Route path="/Welcome" exact>
             <Welcome />
+          </Route>
+        )}
+        {login && (
+          <Route path="/" exact>
+            <Redirect to="/Welcome" />
+          </Route>
+        )}
+        {login && (
+          <Route path="/Welcome/Profile">
+            <Profile />
           </Route>
         )}
       </Switch>
