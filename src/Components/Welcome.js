@@ -13,10 +13,34 @@ function Welcome() {
           requestType: "VERIFY_EMAIL",
           idToken: token,
         }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     ).then((res) => {
       return res.json().then((data) => {
-        alert(data.email);
+        console.log(data.email);
+        fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              oobCode: data.oobCode,
+            }),
+          }
+        ).then((res) => {
+          if (res.ok) {
+            return res.json().then((data) => {
+              if (data.emailVerified) {
+                alert("Email is verified");
+              } else {
+                alert("Email is not verified");
+              }
+            });
+          } else {
+            alert("some problem is arise");
+          }
+        });
       });
     });
   }
