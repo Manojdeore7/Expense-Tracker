@@ -18,31 +18,40 @@ function Welcome() {
         },
       }
     ).then((res) => {
-      return res.json().then((data) => {
-        console.log(data.email);
-        fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              oobCode: data.oobCode,
-            }),
-          }
-        ).then((res) => {
-          if (res.ok) {
-            return res.json().then((data) => {
-              if (data.emailVerified) {
-                alert("Email is verified");
-              } else {
-                alert("Email is not verified");
-              }
-            });
-          } else {
-            alert("some problem is arise");
-          }
+      if (res.ok) {
+        return res.json().then((data) => {});
+      } else {
+        return res.json().then((data) => {
+          alert(data.error.message);
         });
-      });
+      }
     });
+    setTimeout(() => {
+      fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: token,
+          }),
+        }
+      ).then((res) => {
+        console.log(res);
+        if (res.ok) {
+          return res.json().then((data) => {
+            if (data.users[0].emailVerified) {
+              alert("Email is verified");
+            } else {
+              alert("Email is not verified");
+            }
+          });
+        } else {
+          return res.json().then((data) => {
+            alert(data.error.message);
+          });
+        }
+      });
+    }, 5000);
   }
   return (
     <div className="row ">

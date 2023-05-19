@@ -4,8 +4,7 @@ import AuthContext from "../Store/AuthContext";
 function Profile() {
   let context = useContext(AuthContext);
   let token = context.Token;
-  let nameRef = useRef("");
-  let urlRef = useRef("");
+
   let [namee, setNmaee] = useState("");
   let [photoUrll, setPhotourll] = useState("");
   useEffect(() => {

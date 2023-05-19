@@ -2,12 +2,17 @@ import React, { useRef, useContext, useState } from "react";
 import AuthContext from "../Store/AuthContext";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import PasswordLink from "./PasswordLink";
 function AuthPage() {
   let emailRef = useRef("");
   let passwordRef = useRef("");
   let cPasswordRef = useRef("");
   let context = useContext(AuthContext);
   let [signIn, setSignIn] = useState(false);
+  let [passwordd, setPasswordd] = useState(true);
+  function clickHandler() {
+    setPasswordd(false);
+  }
   function changeHandler() {
     setSignIn((prev) => {
       return !prev;
@@ -45,6 +50,7 @@ function AuthPage() {
       })
       .then((data) => {
         context.login(data.idToken);
+
         if (context.isLoggedIn) {
           console.log("signUp Succesfully");
         }
@@ -55,14 +61,16 @@ function AuthPage() {
   }
   return (
     <div className="container ">
-      {signIn && (
+      {signIn && passwordd && (
         <LogIn
           submitHandler={submitHandler}
+          clickHandler={clickHandler}
           emailRef={emailRef}
           passwordRef={passwordRef}
           cPasswordRef={cPasswordRef}
         />
       )}
+      {signIn && !passwordd && <PasswordLink />}
       {!signIn && (
         <SignUp
           submitHandler={submitHandler}

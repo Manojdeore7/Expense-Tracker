@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function LogIn(props) {
   return (
     <form className="row " onSubmit={props.submitHandler}>
@@ -13,6 +15,9 @@ function LogIn(props) {
         ref={props.passwordRef}
       ></input>
       <br></br>
+      <button onClick={props.clickHandler} className="btn btn-primary">
+        Do you forgot your Password?
+      </button>
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
