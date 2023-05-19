@@ -7,7 +7,18 @@ function Welcome() {
   let amountRef = useRef();
   let desRef = useRef();
   let catRef = useRef();
+
   let [array, setArray] = useState([]);
+  fetch("https://sighin-89b60-default-rtdb.firebaseio.com/expense.json").then(
+    (res) => {
+      return res.json().then((data) => {
+        for (let key in data) {
+          array.push(data.key);
+          setArray(array);
+        }
+      });
+    }
+  );
   function clickHandler() {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
@@ -40,7 +51,6 @@ function Welcome() {
           }),
         }
       ).then((res) => {
-        console.log(res);
         if (res.ok) {
           return res.json().then((data) => {
             if (data.users[0].emailVerified) {
@@ -59,13 +69,20 @@ function Welcome() {
   }
   function AddExpense(e) {
     e.preventDefault();
-    let obj = {
-      Amount: amountRef.current.value,
-      Description: desRef.current.value,
-      Category: catRef.current,
-    };
-    setArray((prev) => {
-      prev.push(obj);
+
+    fetch("https://sighin-89b60-default-rtdb.firebaseio.com/expense.json", {
+      method: "POST",
+      body: JSON.stringify({
+        Amount: amountRef.current.value,
+        Description: desRef.current.value,
+        Category: catRef.current.value,
+      }),
+    }).then((res) => {
+      return res.json().then((data) => {
+        setArray((prev) => {
+          return prev.push(data);
+        });
+      });
     });
   }
   return (
@@ -95,15 +112,17 @@ function Welcome() {
         <table className="table">
           <thead>
             <tr>
+              <th>No</th>
               <th>Amount</th>
               <th>Description</th>
               <th>Category</th>
             </tr>
           </thead>
           <tbody>
-            {array.map((obj) => {
+            {array.map((obj, index) => {
               return (
                 <tr>
+                  <td>{index}</td>
                   <td>{obj.Amount}</td>
                   <td>{obj.Description}</td>
                   <td>{obj.Category}</td>
