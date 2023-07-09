@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../Store/AuthContext";
 function Welcome() {
   let context = useContext(AuthContext);
@@ -9,16 +9,23 @@ function Welcome() {
   let catRef = useRef();
 
   let [array, setArray] = useState([]);
-  fetch("https://sighin-89b60-default-rtdb.firebaseio.com/expense.json").then(
-    (res) => {
-      return res.json().then((data) => {
-        for (let key in data) {
-          array.push(data.key);
-          setArray(array);
-        }
-      });
+  let funGet = async () => {
+    array = [];
+
+    let res = await fetch(
+      `https://reduxstore-751e1-default-rtdb.firebaseio.com/expense.json`
+    );
+    let data = await res.json();
+    for (let key in data) {
+      array.push(data[key]);
     }
-  );
+
+    setArray(array);
+  };
+  useEffect(() => {
+    funGet();
+  }, []);
+
   function clickHandler() {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
@@ -34,7 +41,9 @@ function Welcome() {
       }
     ).then((res) => {
       if (res.ok) {
-        return res.json().then((data) => {});
+        return res.json().then((data) => {
+          console.log(data);
+        });
       } else {
         return res.json().then((data) => {
           alert(data.error.message);
@@ -70,20 +79,23 @@ function Welcome() {
   function AddExpense(e) {
     e.preventDefault();
 
-    fetch("https://sighin-89b60-default-rtdb.firebaseio.com/expense.json", {
-      method: "POST",
-      body: JSON.stringify({
-        Amount: amountRef.current.value,
-        Description: desRef.current.value,
-        Category: catRef.current.value,
-      }),
-    }).then((res) => {
-      return res.json().then((data) => {
-        setArray((prev) => {
-          return prev.push(data);
-        });
-      });
-    });
+    let fun = async () => {
+      let res = await fetch(
+        `https://reduxstore-751e1-default-rtdb.firebaseio.com/expense.json`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            Amount: amountRef.current.value,
+            Description: desRef.current.value,
+            Category: catRef.current.value,
+          }),
+        }
+      );
+      let data = await res.json();
+      setArray([]);
+    };
+    fun();
+    funGet();
   }
   return (
     <div className="row ">
@@ -119,16 +131,17 @@ function Welcome() {
             </tr>
           </thead>
           <tbody>
-            {array.map((obj, index) => {
-              return (
-                <tr>
-                  <td>{index}</td>
-                  <td>{obj.Amount}</td>
-                  <td>{obj.Description}</td>
-                  <td>{obj.Category}</td>
-                </tr>
-              );
-            })}
+            {array.length > 0 &&
+              array.map((obj, index) => {
+                return (
+                  <tr>
+                    <td>{index}</td>
+                    <td>{obj.Amount}</td>
+                    <td>{obj.Description}</td>
+                    <td>{obj.Category}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
