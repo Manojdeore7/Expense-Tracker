@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../Store/AuthContext";
+let ID;
 function Welcome() {
   let context = useContext(AuthContext);
   let token = context.Token;
@@ -11,9 +12,23 @@ function Welcome() {
   let [array, setArray] = useState([]);
   let funGet = async () => {
     array = [];
+    let res1 = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: token,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    let data1 = await res1.json();
+    ID = data1.users[0].localId;
 
     let res = await fetch(
-      `https://reduxstore-751e1-default-rtdb.firebaseio.com/expense.json`
+      `https://reduxstore-751e1-default-rtdb.firebaseio.com/${ID}.json`
     );
     let data = await res.json();
     for (let key in data) {
@@ -81,7 +96,7 @@ function Welcome() {
 
     let fun = async () => {
       let res = await fetch(
-        `https://reduxstore-751e1-default-rtdb.firebaseio.com/expense.json`,
+        `https://reduxstore-751e1-default-rtdb.firebaseio.com/${ID}.json`,
         {
           method: "POST",
           body: JSON.stringify({
