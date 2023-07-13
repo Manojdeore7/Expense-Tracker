@@ -107,7 +107,6 @@ function Welcome() {
         }
       );
       let data = await res.json();
-      setArray([]);
     };
     fun();
     funGet();
