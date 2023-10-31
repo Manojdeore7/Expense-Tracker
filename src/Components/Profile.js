@@ -9,7 +9,7 @@ function Profile() {
   let [photoUrll, setPhotourll] = useState("");
   useEffect(() => {
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
       {
         method: "POST",
         body: JSON.stringify({
@@ -33,7 +33,7 @@ function Profile() {
     e.preventDefault();
 
     let res = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+      "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
       {
         method: "POST",
         body: JSON.stringify({

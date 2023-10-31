@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../Store/AuthContext";
-let ID;
+
 function Welcome() {
   let context = useContext(AuthContext);
   let token = context.Token;
+  let localId = context.localId;
   let amountRef = useRef();
   let desRef = useRef();
   let catRef = useRef();
@@ -12,23 +13,9 @@ function Welcome() {
   let [array, setArray] = useState([]);
   let funGet = async () => {
     array = [];
-    let res1 = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: token,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let data1 = await res1.json();
-    ID = data1.users[0].localId;
 
     let res = await fetch(
-      `https://reduxstore-751e1-default-rtdb.firebaseio.com/${ID}.json`
+      `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`
     );
     let data = await res.json();
     for (let key in data) {
@@ -43,7 +30,7 @@ function Welcome() {
 
   function clickHandler() {
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
       {
         method: "POST",
         body: JSON.stringify({
@@ -67,7 +54,7 @@ function Welcome() {
     });
     setTimeout(() => {
       fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
         {
           method: "POST",
           body: JSON.stringify({
@@ -96,7 +83,7 @@ function Welcome() {
 
     let fun = async () => {
       let res = await fetch(
-        `https://reduxstore-751e1-default-rtdb.firebaseio.com/${ID}.json`,
+        `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`,
         {
           method: "POST",
           body: JSON.stringify({

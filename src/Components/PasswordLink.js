@@ -5,7 +5,7 @@ function PasswordLink() {
     e.preventDefault();
     let email = emailRef.current.value;
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
       {
         method: "POST",
         body: JSON.stringify({

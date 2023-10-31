@@ -26,10 +26,10 @@ function AuthPage() {
     let url;
     if (signIn) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78";
     } else {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAgl36Y2mjDOhSlZShpe33Xk4fWzEhi6TE";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78";
     }
 
     fetch(url, {
@@ -49,8 +49,8 @@ function AuthPage() {
         }
       })
       .then((data) => {
-        context.login(data.idToken);
-
+        context.login(data.idToken, data.localId);
+        console.log(data);
         if (context.isLoggedIn) {
           console.log("signUp Succesfully");
         }
