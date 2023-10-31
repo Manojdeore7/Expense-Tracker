@@ -11,23 +11,22 @@ function Welcome() {
   let catRef = useRef();
 
   let [array, setArray] = useState([]);
+  async function funGet() {
+    array = [];
 
-  useEffect(() => {
-    async function funGet() {
-      array = [];
-
-      let res = await fetch(
-        `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`
-      );
-      let data = await res.json();
-      for (let key in data) {
-        array.push(data[key]);
-      }
-
-      setArray(array);
+    let res = await fetch(
+      `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`
+    );
+    let data = await res.json();
+    for (let key in data) {
+      array.push(data[key]);
     }
+
+    setArray(array);
+  }
+  useEffect(() => {
     funGet();
-  }, [token]);
+  }, [funGet]);
 
   function clickHandler() {
     fetch(
