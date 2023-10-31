@@ -26,7 +26,7 @@ function Welcome() {
   };
   useEffect(() => {
     funGet();
-  }, []);
+  }, [token]);
 
   function clickHandler() {
     fetch(
@@ -93,7 +93,6 @@ function Welcome() {
           }),
         }
       );
-      let data = await res.json();
     };
     fun();
     funGet();

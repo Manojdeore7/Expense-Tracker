@@ -22,7 +22,7 @@ function Profile() {
         setPhotourll(data.users[0].photoUrl || "");
       });
     });
-  }, []);
+  }, [token]);
   function onChangeHandler(e) {
     setNmaee(e.target.value);
   }
