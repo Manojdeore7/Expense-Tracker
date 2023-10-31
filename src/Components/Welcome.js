@@ -26,7 +26,7 @@ function Welcome() {
   }
   useEffect(() => {
     funGet();
-  }, [funGet]);
+  }, [token, array]);
 
   function clickHandler() {
     fetch(
