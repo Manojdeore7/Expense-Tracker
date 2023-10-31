@@ -1,5 +1,5 @@
 import AuthContext from "./AuthContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function AuthProvider(props) {
   let [Token, setToken] = useState(null);
   let [localId, setLocalId] = useState(null);
