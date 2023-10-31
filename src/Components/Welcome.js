@@ -11,7 +11,7 @@ function Welcome() {
   let catRef = useRef();
 
   let [array, setArray] = useState([]);
-  let funGet = async () => {
+  async function funGet() {
     array = [];
 
     let res = await fetch(
@@ -23,7 +23,7 @@ function Welcome() {
     }
 
     setArray(array);
-  };
+  }
   useEffect(() => {
     funGet();
   }, [token]);
@@ -82,7 +82,7 @@ function Welcome() {
     e.preventDefault();
 
     let fun = async () => {
-      let res = await fetch(
+      await fetch(
         `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`,
         {
           method: "POST",
