@@ -26,7 +26,7 @@ function Welcome() {
   }
   useEffect(() => {
     funGet();
-  }, [token, array]);
+  }, [token, array, localId]);
 
   function clickHandler() {
     fetch(
