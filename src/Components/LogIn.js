@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function LogIn(props) {
   return (
     <form className="row " onSubmit={props.submitHandler}>

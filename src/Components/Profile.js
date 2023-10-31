@@ -1,4 +1,4 @@
-import { useRef, useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Store/AuthContext";
 
 function Profile() {
