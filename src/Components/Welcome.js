@@ -12,7 +12,7 @@ function Welcome() {
   let array = context.array;
   useEffect(() => {
     context.getData();
-  }, []);
+  }, [context]);
   function clickHandler() {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
