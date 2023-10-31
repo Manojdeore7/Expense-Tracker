@@ -10,9 +10,8 @@ function Welcome() {
   let desRef = useRef();
   let catRef = useRef();
   let array = context.array;
-  let fun = context.getData;
   useEffect(() => {
-    fun();
+    context.getData();
   }, []);
   function clickHandler() {
     fetch(

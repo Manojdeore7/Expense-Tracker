@@ -1,5 +1,5 @@
 import AuthContext from "./AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function AuthProvider(props) {
   let [Token, setToken] = useState(null);
   let [localId, setLocalId] = useState(null);
@@ -23,10 +23,11 @@ function AuthProvider(props) {
 
     setArray(arr);
   }
-  let loggedInHandeler = (token, local) => {
+  let loggedInHandeler = async (token, local) => {
     setToken(token);
     setLocalId(local);
   };
+
   function getData() {
     funGet();
   }
