@@ -8,6 +8,7 @@ function AuthPage() {
   let passwordRef = useRef("");
   let cPasswordRef = useRef("");
   let context = useContext(AuthContext);
+
   let [signIn, setSignIn] = useState(false);
   let [passwordd, setPasswordd] = useState(true);
   function clickHandler() {
@@ -50,7 +51,7 @@ function AuthPage() {
       })
       .then((data) => {
         context.login(data.idToken, data.localId);
-        console.log(data);
+
         if (context.isLoggedIn) {
           console.log("signUp Succesfully");
         }

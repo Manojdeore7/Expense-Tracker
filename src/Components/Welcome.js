@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import AuthContext from "../Store/AuthContext";
 
 function Welcome() {
@@ -9,25 +9,10 @@ function Welcome() {
   let amountRef = useRef();
   let desRef = useRef();
   let catRef = useRef();
-
-  let [array, setArray] = useState([]);
-  async function funGet() {
-    array = [];
-
-    let res = await fetch(
-      `https://expense-tracker-e9979-default-rtdb.firebaseio.com/Expenses/${localId}.json`
-    );
-    let data = await res.json();
-    for (let key in data) {
-      array.push(data[key]);
-    }
-
-    setArray(array);
-  }
+  let array = context.array;
   useEffect(() => {
-    funGet();
-  }, [funGet]);
-
+    context.getData();
+  }, []);
   function clickHandler() {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCERo0cEydOKZisrgTNN7NpXAxQPAuES78",
@@ -95,7 +80,7 @@ function Welcome() {
       );
     };
     fun();
-    funGet();
+    context.getData();
   }
   return (
     <div className="row ">
